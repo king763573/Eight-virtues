@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八德走讀行 | 八德社大戶外休閒樂活行班</title>
+    <style>
+        /* --- 全局樣式 --- */
+        :root {
+            --primary-color: #2c5e4a;
+            --secondary-color: #f3f0e9;
+            --accent-color: #d48c3c;
+            --text-color: #333;
+            --content-text-color: #555;
+            --light-bg: #faf8f2;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --card-hover-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Montserrat:wght@400;600&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', 'Helvetica Neue', '微軟正黑體', 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* --- 導覽列 --- */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212,140,60,0.4);
+        }
+
+        /* --- 頁首橫幅 --- */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44,94,74,0.6) 0%, rgba(212,140,60,0.6) 100%);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.8em;
+            margin-top: 10px;
+            position: relative;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 400;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        /* --- 內容區塊 --- */
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        /* 區塊標題視覺優化 */
+        .section h2 {
+            color: var(--primary-color);
+            padding-left: 20px;
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .section h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 8px;
+            background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+            border-radius: 4px;
+        }
+        
+        /* 內文顏色優化 */
+        .section p, .section li, .card-content p {
+            color: var(--content-text-color);
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.05em;
+            line-height: 1.9;
+        }
+
+        /* --- 向上回首頁按鈕 --- */
+        .back-to-top {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            line-height: 55px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 26px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            border: 2px solid white;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- 卡片式排版 (景點) --- */
+        .card {
+            display: flex;
+            margin-bottom: 40px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .card img { /* 適用於單張圖片 */
+            width: 350px;
+            height: 250px;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.03);
+        }
+
+        .card-content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.8em;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .card-content h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+            border-radius: 3px;
+        }
+        
+        /* --- 行程表 --- */
+        .itinerary-day {
+            margin-bottom: 30px;
+            background: rgba(243,240,233,0.3);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-color);
+        }
+        .itinerary-day h3 {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .itinerary-day ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .itinerary-day li {
+            padding: 12px 15px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        .itinerary-day li:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        .itinerary-day li strong {
+            color: var(--primary-color);
+            display: inline-block;
+            width: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        /* --- 費用 & 注意事項列表 --- */
+        .info-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .info-list li::before {
+            content: '•';
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        .info-list strong {
+            color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* --- Slideshow 幻燈片樣式 --- */
+        .slideshow-container {
+            position: relative;
+            width: 350px;
+            height: 250px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 10px 0 0 10px;
+        }
+        .slideshow-container .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slideshow-container .slide.active {
+            opacity: 1;
+        }
+
+        /* 價格樣式 */
+        #cost p {
+            font-size: 1.8em;
+            color: var(--accent-color);
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(212,140,60,0.1), rgba(44,94,74,0.1));
+            border-radius: 10px;
+            border: 2px dashed var(--accent-color);
+        }
+
+        /* --- RWD 響應式設計 --- */
+        @media (max-width: 768px) {
+            .navbar {
+                justify-content: space-around;
+            }
+            .navbar a {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                margin: 3px;
+            }
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero p {
+                font-size: 1.3em;
+            }
+            .card {
+                flex-direction: column;
+            }
+            .card img, .slideshow-container {
+                width: 100%;
+                height: 220px;
+                border-radius: 10px 10px 0 0 !important;
+            }
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                line-height: 45px;
+                font-size: 22px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .section {
+                padding: 30px 20px;
+            }
+            .section h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景音樂播放器 -->
+    <audio id="background-music" loop autoplay>
+        <source src="01.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音訊播放。
+    </audio>
+
+    <!-- 頂端導覽列 -->
+    <a id="top"></a>
+    <nav class="navbar">
+        <a href="#itinerary">行程總覽</a>
+        <a href="#attractions">景點介紹</a>
+        <a href="#traffic">交通資訊</a>
+        <a href="#cost">費用說明</a>
+        <a href="#notes">注意事項</a>
+        <a href="#" id="music-toggle">關閉音樂</a>
+    </nav>
+
+    <!-- 頁首主視覺 -->
+    <header class="hero">
+        <h1>八德走讀行</h1>
+        <p>八德社大戶外休閒樂活行班 | 2025/09/17(星期三) </p>
+        <p>導讀老師:李光義老師(鐵杉) </p>
+    </header>
+
+    <!-- 主要內容區 -->
+    <div class="container">
+
+        <!-- 行程總覽 -->
+        <section id="itinerary" class="section">
+            <h2>行程總覽</h2>
+            <div class="itinerary-day">
+                <h3>八德走讀行：9/17 (星期三)</h3>
+                <ul>
+                    <li><strong>14:00</strong> 八德三元宮前集合</li>
+                    <li><strong>14:30</strong> 【八德三元宮】參觀與解說</li>
+                    <li><strong>15:30</strong> 【廣福宮】參觀與解說</li>
+                    <li><strong>16:30</strong> 【邱家餘慶堂】參觀與解說</li>
+                    <li><strong>17:30</strong> 【呂家著存堂】參觀與解說</li>
+                    <li><strong>18:30</strong> ～賦歸～</li>
+                </ul>
+            </div>
+            <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 景點介紹 -->
+        <section id="attractions" class="section">
+            <h2>景點介紹</h2>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="01.png" class="slide active" alt="八德三元宮照片1">
+                    <img src="02.png" class="slide" alt="八德三元宮照片2">
+                    <img src="03.png" class="slide" alt="八德三元宮照片3">
+                    <img src="04.png" class="slide" alt="八德三元宮照片4">
+                </div>
+                <div class="card-content">
+                    <h3>八德三元宮</h3>
+                    <p>桃園市八德區最古老的廟宇，創建於清乾隆二年，正殿奉祀主神為天、地、水三元三品三官大帝，也是「八德三元宮」命名由來；中殿奉祀主神則為天上聖母；後殿二樓奉祀主神為玉皇大帝。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="05.png" class="slide active" alt="廣福宮照片1">
+                    <img src="06.png" class="slide" alt="廣福宮照片2">
+                    <img src="07.png" class="slide" alt="廣福宮照片3">
+                    <img src="08.png" class="slide" alt="廣福宮照片4">
+                </div>
+                <div class="card-content">
+                    <h3>廣福宮</h3>
+                    <p>清乾隆年間大批漢人移入桃園八德地區此地區拓墾，其中以清乾隆10年（西元1745年）閩人邱、呂、謝、蕭、賴、黃、吳、李等族自鳳山北上開墾為大宗。為求風調雨順，祭拜福德正神祈求拓墾平安。
+清乾隆46年(西元1781年)間，由地方志士發起興建，僅以石碑刻字為神之方式，將土地公安奉至此，為八德廣福宮之原型。而早期農業社會廣福宮為無人管理的狀態，日治大正14年（西元1925年）三元宮重修完竣，便將剩餘之石材修整廣福宮，至此廣福宮才有宮廟雛形。爾後若有修繕等事宜，經費皆由八德三元宮出資，經歷過多次修繕，才有今日的規模。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="09.png" class="slide active" alt="邱家餘慶堂照片1">
+                    <img src="10.png" class="slide" alt="邱家餘慶堂照片2">
+                    <img src="11.png" class="slide" alt="邱家餘慶堂照片3">
+                    <img src="12.png" class="slide" alt="邱家餘慶堂照片4">
+                </div>
+                <div class="card-content">
+                    <h3>邱家餘慶堂</h3>
+                    <p>「八德餘慶堂」於民國108年(2019) 9月25日登錄為歷史建築，早期為八德地區邱姓宗祠的所在地，宗祠於日治末期曾作為戰時醫務所，後院曾作為二戰末飛機藏匿之處所，並短暫駐軍特別攻擊隊，具有見證八德地區二戰期間民間與軍方活動狀況之歷史意義。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                     <img src="13.png" class="slide active" alt="呂家著存堂照片1">
+                     <img src="14.png" class="slide" alt="呂家著存堂照片2">
+                     <img src="15.png" class="slide" alt="呂家著存堂照片3">
+                     <img src="16.png" class="slide" alt="呂家著存堂照片4">
+                </div>
+                <div class="card-content">
+                    <h3>呂家著存堂</h3>
+                    <p>呂宅著存堂是詔安呂氏祖厝，位於現今桃園縣八德市的南端，臨近茄冬溪支流，目前規模興建於大正八年（1919），除三合院外，並於正廳前築有軒亭，十分特別。
+呂氏族人在八德地區目前尚留存三座祖厝，分別為「貽訓堂」、「裕耕居」及「著存堂」。「貽訓堂」位於福興里面前厝15號，是北田房達川派下子孫興建的，也是「祭祀公業呂達川」所在地，目前是達川一脈的祠堂；「裕耕居」位於廣興里城仔2號，是玉龍房孟生公派下所興建的民居，現在是「祭祀公業呂孟生」所在地，也是該脈的祠堂；「著存堂」則位於興仁里11鄰建德路135號，是「祭祀公業呂萬春」所在地。</p>
+                </div>
+            </div>
+            <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 交通資訊 -->
+        <section id="traffic" class="section">
+            <h2>交通資訊</h2>
+            <p>本次行程採自行前往方式，請各位夥伴準時於集合地點會合。</p>
+            <ul class="info-list">
+                <li><strong>交通工具：</strong>自行前往</li>
+                <li><strong>集合時間：</strong>9/17 (星期三) 下午 14:00</li>
+                <li><strong>集合地點：</strong>八德三元宮前</li>
+                <li><strong>備註：</strong>請準時抵達集合地點，以利活動順利進行</li>
+            </ul>
+             <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 費用說明 -->
+        <section id="cost" class="section">
+            <h2>費用說明</h2>
+            <p>每位參加夥伴可獲得一份拌手禮（長壽麵+平安水）</p>
+            <ul class="info-list">
+                <li><strong>報名期限：</strong>開放報名至 9/9 晚上 8:00</li>
+                <li><strong>報名方式：</strong>請在社團Line群組以接龍方式報名</li>
+                <li><strong>特別說明：</strong>
+                    <ul>
+                        <li>感謝老師與金菊姐與三元宮協調，提供參加夥伴每人一份拌手禮</li>
+                        <li>請務必在期限內完成報名，以便統計人數準備禮品</li>
+                    </ul>
+                </li>
+            </ul>
+             <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 注意事項 -->
+        <section id="notes" class="section">
+            <h2>注意事項</h2>
+            <ul class="info-list">
+                <li><strong>準時集合：</strong>請務必準時於指定地點集合，逾時不候，以利行程順暢。</li>
+                <li><strong>輕便穿著：</strong>建議穿著舒適、方便行走的休閒服裝與鞋子，因需步行多處景點。</li>
+                <li><strong>防曬防雨：</strong>天氣多變，請準備帽子、太陽眼鏡、防曬用品及雨具。</li>
+                <li><strong>環保愛地球：</strong>為響應環保，建議自行攜帶水壺。</li>
+                <li><strong>保持愉快：</strong>保持一顆愉快的心，享受這趟八德文化走讀之旅！</li>
+            </ul>
+             <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- 音樂播放控制 ---
+            const music = document.getElementById('background-music');
+            const toggleBtn = document.getElementById('music-toggle');
+
+            // 嘗試自動播放音樂
+            let playPromise = music.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // 自動播放成功，按鈕顯示「關閉音樂」
+                    toggleBtn.textContent = '關閉音樂';
+                }).catch(error => {
+                    // 自動播放被瀏覽器阻止，按鈕顯示「開啟音樂」
+                    console.log("音樂自動播放失敗，可能需要使用者手動操作。");
+                    toggleBtn.textContent = '開啟音樂';
+                });
+            }
+
+            // 為音樂開關按鈕添加點擊事件
+            toggleBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // 防止點擊連結時頁面跳轉
+                if (music.paused) {
+                    music.play();
+                    toggleBtn.textContent = '關閉音樂';
+                } else {
+                    music.pause();
+                    toggleBtn.textContent = '開啟音樂';
+                }
+            });
+
+            // --- 幻燈片 JavaScript ---
+            const slideshows = document.querySelectorAll(".slideshow-container");
+
+            slideshows.forEach(slideshow => {
+                let currentSlide = 0;
+                const slides = slideshow.querySelectorAll(".slide");
+                const totalSlides = slides.length;
+
+                if (totalSlides > 1) {
+                    setInterval(() => {
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide + 1) % totalSlides;
+                        slides[currentSlide].classList.add('active');
+                    }, 5000); // 5 秒切換一次
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
