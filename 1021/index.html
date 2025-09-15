@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南投活盆地二日遊 | 八德社大戶外休閒</title>
+    <style>
+        /* --- 全局樣式 --- */
+        :root {
+            --primary-color: #2c5e4a;
+            --secondary-color: #f3f0e9;
+            --accent-color: #d48c3c;
+            --text-color: #333;
+            --content-text-color: #555;
+            --light-bg: #faf8f2;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --card-hover-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Montserrat:wght@400;600&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Serif TC', 'Helvetica Neue', '微軟正黑體', 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* --- 導覽列 --- */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212,140,60,0.4);
+        }
+
+        /* --- 頁首橫幅 --- */
+        .hero {
+            /* VVVVVV 您所更改的背景圖片設定在此行 VVVVVV */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('25.jpeg'); 
+            /* ^^^^^^ 您所更改的背景圖片設定在此行 ^^^^^^ */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44,94,74,0.6) 0%, rgba(212,140,60,0.6) 100%);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.8em;
+            margin-top: 10px;
+            position: relative;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 400;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        /* --- 內容區塊 --- */
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        /* 區塊標題視覺優化 */
+        .section h2 {
+            color: var(--primary-color);
+            padding-left: 20px;
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .section h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 8px;
+            background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+            border-radius: 4px;
+        }
+        
+        /* 內文顏色優化 */
+        .section p, .section li, .card-content p {
+            color: var(--content-text-color);
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.05em;
+            line-height: 1.9;
+        }
+
+        /* --- 向上回首頁按鈕 --- */
+        .back-to-top {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            line-height: 55px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 26px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            border: 2px solid white;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- 卡片式排版 (景點/飯店) --- */
+        .card {
+            display: flex;
+            margin-bottom: 40px;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .card img { /* 適用於單張圖片 */
+            width: 350px;
+            height: auto;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.03);
+        }
+
+        .card-content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.8em;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .card-content h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+            border-radius: 3px;
+        }
+        
+        /* --- 行程表 --- */
+        .itinerary-day {
+            margin-bottom: 30px;
+            background: rgba(243,240,233,0.3);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-color);
+        }
+        .itinerary-day h3 {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .itinerary-day ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .itinerary-day li {
+            padding: 12px 15px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        .itinerary-day li:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        .itinerary-day li .activity::before {
+            content: '→';
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* --- 費用 & 注意事項列表 --- */
+        .info-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .info-list li::before {
+            content: '•';
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        .info-list strong {
+            color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* --- Slideshow 幻燈片樣式 --- */
+        .slideshow-container {
+            position: relative;
+            width: 350px;
+            height: auto;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 10px 0 0 10px;
+        }
+        .slideshow-container .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slideshow-container .slide.active {
+            opacity: 1;
+        }
+
+        /* 價格樣式 */
+        #cost p {
+            font-size: 1.8em;
+            color: var(--accent-color);
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(212,140,60,0.1), rgba(44,94,74,0.1));
+            border-radius: 10px;
+            border: 2px dashed var(--accent-color);
+        }
+
+        /* --- RWD 響應式設計 --- */
+        @media (max-width: 768px) {
+            .navbar {
+                justify-content: space-around;
+            }
+            .navbar a {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                margin: 3px;
+            }
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero p {
+                font-size: 1.3em;
+            }
+            .card {
+                flex-direction: column;
+            }
+            .card img, .slideshow-container {
+                width: 100%;
+                height: 220px;
+                border-radius: 10px 10px 0 0 !important;
+            }
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                line-height: 45px;
+                font-size: 22px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .section {
+                padding: 30px 20px;
+            }
+            .section h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景音樂播放器 -->
+    <audio id="background-music" loop autoplay>
+        <source src="01.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音訊播放。
+    </audio>
+
+    <!-- 頂端導覽列 -->
+    <a id="top"></a>
+    <nav class="navbar">
+        <a href="#itinerary">行程總覽</a>
+        <a href="#hotel">住宿資訊</a>
+        <a href="#attractions">景點介紹</a>
+        <a href="#cost">費用說明</a>
+        <a href="#notes">注意事項</a>
+        <a href="#" id="music-toggle">關閉音樂</a>
+    </nav>
+
+    <!-- 頁首主視覺 -->
+    <header class="hero">
+        <h1>南投活盆地二日遊</h1>
+        <p>八德社大戶外休閒 | 10/21 (二) - 10/22 (三)</p>
+    </header>
+
+    <!-- 主要內容區 -->
+    <div class="container">
+
+        <!-- 行程總覽 -->
+        <section id="itinerary" class="section">
+            <h2>行程總覽</h2>
+            <div class="itinerary-day">
+                <h3>DAY 1：苗栗南投深度之旅</h3>
+                <ul>
+                    <li><span class="activity">八德出發～享用早餐～國道風光</span></li>
+                    <li><span class="activity">頭屋明永堂小憩</span></li>
+                    <li><span class="activity">寧濟御庭園文化園區</span></li>
+                    <li><span class="activity">雅聞峇里海岸觀光工廠</span></li>
+                    <li><span class="activity">欣欣國軍罐頭工廠</span></li>
+                    <li><span class="activity">午餐</span></li>
+                    <li><span class="activity">近水樓台湖畔森咖啡</span></li>
+                    <li><span class="activity">入住埔里箱根溫泉生活館～享受大眾池SPA</span></li>
+                    <li><span class="activity">原住民烤全豬美味銅盤BBQ</span></li>
+                    <li><span class="activity">原住民同樂晚會</span></li>
+                </ul>
+            </div>
+            <div class="itinerary-day">
+                <h3>DAY 2：活盆地與鐵馬道體驗</h3>
+                <ul>
+                    <li><span class="activity">晨喚早餐</span></li>
+                    <li><span class="activity">頭社台版荷蘭羊角村活盆地、體驗划獨木舟</span></li>
+                    <li><span class="activity">午餐</span></li>
+                    <li><span class="activity">后豐鐵馬道（九號隧道、花樑鋼橋、夫妻樹等）</span></li>
+                    <li><span class="activity">回程～晚餐</span></li>
+                    <li><span class="activity">滿載而歸，抵達溫暖的家</span></li>
+                </ul>
+            </div>
+            <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 住宿資訊 -->
+        <section id="hotel" class="section">
+            <h2>住宿資訊</h2>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="01.jpeg" class="slide active" alt="埔里箱根溫泉生活館照片1">
+                    <img src="02.jpeg" class="slide" alt="埔里箱根溫泉生活館照片2">
+                    <img src="03.jpeg" class="slide" alt="埔里箱根溫泉生活館照片3">
+                    <img src="04.jpeg" class="slide" alt="埔里箱根溫泉生活館照片4">
+                </div>
+                <div class="card-content">
+                    <h3>埔里箱根溫泉生活館 (或同級)</h3>
+                    <p>座落於南投埔里，擁有得天獨厚的碳酸氫鈉泉，水質純淨，素有「美人湯」之稱。您可以在寬敞舒適的SPA大眾池中洗去一身疲憊，享受悠閒的溫泉時光，為旅程補充能量。</p>
+                </div>
+            </div>
+             <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 景點介紹 -->
+        <section id="attractions" class="section">
+            <h2>景點介紹</h2>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="05.jpeg" class="slide active" alt="寧濟御庭園照片1">
+                    <img src="06.jpeg" class="slide" alt="寧濟御庭園照片2">
+                    <img src="07.jpeg" class="slide" alt="寧濟御庭園照片3">
+                    <img src="08.jpeg" class="slide" alt="寧濟御庭園照片4">
+                </div>
+                <div class="card-content">
+                    <h3>寧濟御庭園文化園區</h3>
+                    <p>一個充滿漢唐風韻的文化園區，擁有古色古香的建築和精緻的庭園造景。漫步其中，彷彿穿越時空，感受傳統東方園林之美，是個能讓心靈沉澱的靜謐之地。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="09.jpeg" class="slide active" alt="雅聞峇里海岸觀光工廠照片1">
+                    <img src="10.jpeg" class="slide" alt="雅聞峇里海岸觀光工廠照片2">
+                    <img src="11.jpeg" class="slide" alt="雅聞峇里海岸觀光工廠照片3">
+                    <img src="12.jpeg" class="slide" alt="雅聞峇里海岸觀光工廠照片4">
+                </div>
+                <div class="card-content">
+                    <h3>雅聞峇里海岸觀光工廠</h3>
+                    <p>國內最大的南洋風情景觀園區，擁有廣闊的沙灘、茅草屋與熱帶植物。您無需出國就能體驗到濃厚的峇里島度假氛圍，享受悠閒的海岸時光。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                    <img src="13.jpeg" class="slide active" alt="近水樓台湖畔森林咖啡照片1">
+                    <img src="14.jpeg" class="slide" alt="近水樓台湖畔森林咖啡照片2">
+                    <img src="15.jpeg" class="slide" alt="近水樓台湖畔森林咖啡照片3">
+                    <img src="16.jpeg" class="slide" alt="近水樓台湖畔森林咖啡照片4">
+                </div>
+                <div class="card-content">
+                    <h3>近水樓台湖畔森林咖啡</h3>
+                    <p>隱身於日月潭湖畔的秘境咖啡廳，提供絕佳的湖景視野。在這裡，您可以一邊品嚐香醇的咖啡，一邊欣賞湖光山色，享受片刻的寧靜與愜意。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                     <img src="17.jpeg" class="slide active" alt="頭社活盆地照片1">
+                     <img src="18.jpeg" class="slide" alt="頭社活盆地照片2">
+                     <img src="19.jpeg" class="slide" alt="頭社活盆地照片3">
+                     <img src="20.jpeg" class="slide" alt="頭社活盆地照片4">
+                </div>
+                <div class="card-content">
+                    <h3>頭社活盆地</h3>
+                    <p>這裡是全台獨一無二的泥炭土活盆地，因土質鬆軟，走在上面會感受到地面如水床般晃動，非常奇特。您還可以在此體驗獨木舟，穿梭於水道之間，感受「台版荷蘭羊角村」的獨特魅力。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="slideshow-container">
+                     <img src="21.jpeg" class="slide active" alt="后豐鐵馬道照片1">
+                     <img src="22.jpeg" class="slide" alt="后豐鐵馬道照片2">
+                     <img src="23.jpeg" class="slide" alt="后豐鐵馬道照片3">
+                     <img src="24.jpeg" class="slide" alt="后豐鐵馬道照片4">
+                </div>
+                <div class="card-content">
+                    <h3>后豐鐵馬道</h3>
+                    <p>由舊山線鐵道改建而成的自行車道，沿途風光明媚。您將騎乘電動腳踏車，輕鬆穿越壯觀的「花樑鋼橋」與涼爽的「九號隧道」，享受追風的樂趣與懷舊的鐵道風情。</p>
+                </div>
+            </div>
+            <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 費用說明 -->
+        <section id="cost" class="section">
+            <h2>費用說明</h2>
+            <p>每位夥伴費用： NT$ 4,900 元</p>
+            <ul class="info-list">
+                <li><strong>名額：</strong>42 位</li>
+                <li><strong>費用包含：</strong>
+                    <ul>
+                        <li>全程遊覽車車資、保險</li>
+                        <li>住宿、餐食</li>
+                        <li>所有景點門票</li>
+                        <li>租賃電動腳踏車費用</li>
+                        <li>司領踩線費用</li>
+                     </ul>
+                </li>
+                <li><strong>費用不包含：</strong>
+                    <ul>
+                        <li>個人因素所產生之消費，如飲料、酒類、私人購物等</li>
+                        <li>個人旅遊平安險，建議可自行加保</li>
+                    </ul>
+                </li>
+            </ul>
+             <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+        <!-- 注意事項 -->
+        <section id="notes" class="section">
+            <h2>注意事項</h2>
+            <ul class="info-list">
+                <li><strong>報名方式：</strong>參加的夥伴請接龍報名，素食者請加註。</li>
+                <li><strong>親友參加：</strong>9/17 如尚有餘額，將開放親友參加。</li>
+                <li><strong>準時集合：</strong>請務必準時於指定地點集合，逾時不候，以利行程順暢。</li>
+                <li><strong>輕便穿著：</strong>建議穿著舒適、方便行走的休閒服裝與鞋子。</li>
+                <li><strong>個人藥品：</strong>請自行準備個人常用藥品，如暈車藥、腸胃藥等。</li>
+                <li><strong>防曬防雨：</strong>請準備帽子、太陽眼鏡、防曬用品及雨具。</li>
+                <li><strong>環保愛地球：</strong>為響應環保，建議自行攜帶水壺。</li>
+                <li><strong>證件攜帶：</strong>請務必攜帶個人身分證、健保卡等證件。</li>
+            </ul>
+             <a href="#top" class="back-to-top" title="回到首頁">↑</a>
+        </section>
+
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- 音樂播放控制 ---
+            const music = document.getElementById('background-music');
+            const toggleBtn = document.getElementById('music-toggle');
+
+            let playPromise = music.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    toggleBtn.textContent = '關閉音樂';
+                }).catch(error => {
+                    console.log("音樂自動播放失敗，可能需要使用者手動操作。");
+                    toggleBtn.textContent = '開啟音樂';
+                });
+            }
+
+            toggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (music.paused) {
+                    music.play();
+                    toggleBtn.textContent = '關閉音樂';
+                } else {
+                    music.pause();
+                    toggleBtn.textContent = '開啟音樂';
+                }
+            });
+
+            // --- 幻燈片 JavaScript ---
+            const slideshows = document.querySelectorAll(".slideshow-container");
+
+            slideshows.forEach(slideshow => {
+                let currentSlide = 0;
+                const slides = slideshow.querySelectorAll(".slide");
+                const totalSlides = slides.length;
+
+                if (totalSlides > 1) {
+                    // 確保第一張圖片顯示
+                    slides[0].classList.add('active');
+                    setInterval(() => {
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide + 1) % totalSlides;
+                        slides[currentSlide].classList.add('active');
+                    }, 5000); // 5 秒切換一次
+                } else if (totalSlides === 1) {
+                    slides[0].classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
